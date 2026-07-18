@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Âu Thị Thanh Thư | Khúc Ca Thanh Xuân</title>
+    
+    <!-- Phông chữ: Playfair Display (Yêu kiều, sang trọng) & Quicksand (Tròn trịa, mềm mại) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /*
+        ==========================================================================
+           SOFT PASTEL THEME - PINK, ORANGE, WHITE (ÂU THỊ THANH THƯ)
+        ==========================================================================
+        */
+        :root {
+            /* Nền Gradient Hồng phớt và Cam trắng */
+            --bg-body-start: #FFF0F5; /* Lavender Blush (Hồng cực nhạt) */
+            --bg-body-end: #FFF3E0;   /* Seashell (Cam trắng nhạt) */
+            
+            /* Tấm kính mờ (Thẻ) sáng màu, thanh thoát */
+            --bg-card: rgba(255, 255, 255, 0.65); 
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --glass-border-hover: rgba(255, 160, 122, 0.5); /* Cam san hô nhạt */
+            
+            /* Bảng màu chữ mềm mại */
+            --text-main: #5D4037; /* Nâu trầm, dễ chịu cho mắt */
+            --text-muted: #8D6E63; /* Nâu nhạt */
+            
+            /* Màu nhấn (Hồng & Cam đào) */
+            --accent-light: #FF7F50; /* Coral (Cam đào) */
+            --accent-pink: #FF8BA7;  /* Hồng phấn */
+            --accent-gradient: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%); /* Gradient bay bổng */
+            
+            /* Bóng đổ bồng bềnh, yêu kiều */
+            --shadow-soft: 0 10px 30px rgba(255, 139, 167, 0.08);
+            --shadow-hover: 0 15px 40px rgba(255, 127, 80, 0.15);
+            
+            --radius-lg: 30px;
+            --radius-md: 20px;
+            --transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background: linear-gradient(135deg, var(--bg-body-start) 0%, var(--bg-body-end) 100%);
+            background-attachment: fixed;
+            color: var(--text-main); 
+            line-height: 1.7; 
+            scroll-behavior: smooth; 
+            overflow-x: hidden;
+        }
+
+        /* TẠO HIỆU ỨNG ÁNH SÁNG MỜ ẢO PHÍA SAU */
+        body::before {
+            content: ''; position: fixed; top: -20%; right: -10%; width: 60vw; height: 60vw;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, transparent 70%);
+            z-index: -2; pointer-events: none;
+        }
+
+        /* HỌA TIẾT TRANG TRÍ (HOA, LÁ, CHIM, SỨA, SAN HÔ, SAO BIỂN) */
+        .decor-item {
+            position: fixed; z-index: -1; opacity: 0.7;
+            animation: float-around 20s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+        @keyframes float-around {
+            0% { transform: translateY(0) translateX(0) rotate(0deg); }
+            50% { transform: translateY(-20px) translateX(15px) rotate(8deg); }
+            100% { transform: translateY(15px) translateX(-15px) rotate(-8deg); }
+        }
+
+        /* NAVBAR ĐIỆU ĐÀ */
+        .navbar { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 20px 50px; background: rgba(255, 255, 255, 0.6); 
+            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+            position: sticky; top: 0; z-index: 100; 
+            border-bottom: 1px solid rgba(255, 139, 167, 0.2); 
+        }
+        .nav-brand { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--text-main); letter-spacing: 2px;}
+        .nav-brand span { color: var(--accent-pink); }
+        .nav-links { display: flex; gap: 35px; list-style: none; }
+        .nav-links a { font-size: 15px; font-weight: 700; color: var(--text-muted); text-decoration: none; transition: var(--transition); text-transform: uppercase; letter-spacing: 1px;}
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-light); }
+
+        /* BỐ CỤC CHUNG */
+        .container { max-width: 1100px; margin: 50px auto; padding: 0 20px; display: flex; flex-direction: column; gap: 60px; }
+        
+        .fade-up { opacity: 0; transform: translateY(35px); transition: opacity 1s ease-out, transform 1s ease-out; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO SECTION */
+        .hero-grid { display: grid; grid-template-columns: 380px 1fr; gap: 50px; align-items: center; }
+
+        /* Glass Card Chung */
+        .glass-card {
+            background: var(--bg-card); 
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); 
+            border-radius: var(--radius-lg); 
+            box-shadow: var(--shadow-soft); 
+            transition: var(--transition);
+        }
+
+        .id-card { overflow: hidden; position: relative; }
+        .id-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: var(--glass-border-hover); }
+        
+        .avatar-box { position: relative; height: 400px; width: 100%; overflow: hidden;}
+        /* SỬA ẢNH THÀNH avatar.png ĐỂ KHỚP VỚI ĐỊNH DẠNG TRONG THƯ MỤC CỦA BẠN */
+        .avatar-box img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 0.8s ease; }
+        .id-card:hover .avatar-box img { transform: scale(1.06); }
+        
+        .status-badge { 
+            position: absolute; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(10px); padding: 8px 18px; border-radius: 30px; 
+            font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--text-main);
+            border: 1px solid rgba(255, 139, 167, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        .status-badge .dot { width: 8px; height: 8px; background: var(--accent-pink); border-radius: 50%; box-shadow: 0 0 8px var(--accent-pink); }
+        
+        .id-info { padding: 30px; text-align: center; }
+        .id-info h1 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--accent-light); margin-bottom: 5px; line-height: 1.2; font-weight: 700;}
+        .id-info .role { font-size: 14px; color: var(--text-muted); font-weight: 600; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px;}
+        .id-info ul { list-style: none; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 20px; text-align: left;}
+        .id-info li { font-size: 14px; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 12px; font-weight: 600;}
+
+        /* Bản tuyên ngôn */
+        .hero-vision { padding: 10px 0; }
+        .pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+        .pill-pink { background: rgba(255, 139, 167, 0.15); color: #E85D75; padding: 8px 16px; border-radius: 30px; font-size: 12px; font-weight: 700; border: 1px solid rgba(255, 139, 167, 0.3);}
+        .pill-orange { background: rgba(255, 127, 80, 0.15); color: var(--accent-light); padding: 8px 16px; border-radius: 30px; font-size: 12px; font-weight: 700; border: 1px solid rgba(255, 127, 80, 0.3);}
+        
+        .hero-vision h2 { font-family: 'Playfair Display', serif; font-size: 46px; color: var(--text-main); margin-bottom: 20px; line-height: 1.3; font-weight: 700;}
+        .text-gradient { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .hero-vision p { font-size: 15.5px; color: var(--text-muted); line-height: 1.9; margin-bottom: 20px; text-align: justify; font-weight: 500;}
+
+        /* Nút bấm */
+        .actions { display: flex; gap: 15px; margin-top: 35px; }
+        .btn-primary {
+            background: var(--accent-gradient); color: #FFF; padding: 15px 30px; 
+            border-radius: 30px; font-size: 13px; font-weight: 700; text-decoration: none; 
+            transition: var(--transition); box-shadow: 0 10px 20px rgba(255, 139, 167, 0.3); letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .btn-primary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 15px 30px rgba(255, 139, 167, 0.5); color: #FFF;}
+        .btn-outline {
+            background: rgba(255, 255, 255, 0.8); color: var(--accent-light); padding: 15px 30px; 
+            border-radius: 30px; border: 1px solid var(--accent-light); font-size: 13px; font-weight: 700; 
+            text-decoration: none; transition: var(--transition); letter-spacing: 1.5px; text-transform: uppercase;
+        }
+        .btn-outline:hover { background: var(--accent-light); color: #FFF; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 127, 80, 0.2);}
+
+        /* MODULES GRID (BỨC TRANH THANH XUÂN + NHẬT KÝ) */
+        .section-heading { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--text-main); margin-bottom: 30px; display: flex; align-items: center; justify-content: center; gap: 15px;}
+        .section-heading span { color: var(--accent-pink); font-size: 28px; }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
+        .module-card { padding: 40px 30px; position: relative; display: flex; flex-direction: column; gap: 15px; cursor: pointer; z-index: 1; text-align: center; align-items: center;}
+        .module-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-hover); border-color: var(--glass-border-hover); background: rgba(255, 255, 255, 0.85);}
+        
+        /* So le thẻ cho phần Nhật Ký */
+        .grid-3 .module-card:nth-child(3n+2) { transform: translateY(20px); }
+        .grid-3 .module-card:nth-child(3n+2):hover { transform: translateY(12px); }
+
+        .card-icon { font-size: 45px; margin-bottom: 10px; transition: var(--transition); }
+        .module-card:hover .card-icon { transform: scale(1.15) rotate(5deg); }
+        
+        .module-title { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--text-main); font-weight: 700; z-index: 2;}
+        .module-desc { font-size: 15px; color: var(--text-muted); line-height: 1.7; z-index: 2; flex-grow: 1; text-align: justify; text-align-last: center;}
+        
+        .btn-detail { background: none; border: none; color: var(--accent-light); font-weight: 700; font-size: 14px; cursor: pointer; z-index: 2; transition: var(--transition); padding: 5px 15px; border-radius: 20px; border: 1px solid rgba(255, 127, 80, 0.3);}
+        .module-card:hover .btn-detail { background: var(--accent-light); color: #FFF; }
+
+        /* CLOUD DRAWER (HỌC LIỆU) */
+        .pod { padding: 50px; text-align: center; }
+        .pod-title { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--text-main); margin-bottom: 10px; font-weight: 700;}
+        .pod-title span { color: var(--accent-pink); }
+        .pod-subtitle { font-size: 15px; margin-bottom: 40px; color: var(--text-muted); font-weight: 500;}
+
+        .file-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .file-btn { 
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            padding: 20px; background: rgba(255,255,255,0.7); border: 1px dashed rgba(255, 127, 80, 0.5); 
+            border-radius: var(--radius-lg); font-size: 14px; font-weight: 700; 
+            color: var(--text-main); transition: var(--transition); text-decoration: none;
+        }
+        .file-btn:hover { 
+            background: rgba(255, 127, 80, 0.1); border-style: solid; border-color: var(--accent-light); 
+            color: var(--accent-light); box-shadow: var(--shadow-hover); transform: translateY(-5px);
+        }
+
+        /* PHẦN KẾT - LỜI THÌ THẦM */
+        .conclusion-box {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-radius: var(--radius-lg);
+            padding: 70px 50px;
+            text-align: center;
+            border: 1px dashed var(--accent-pink);
+            box-shadow: var(--shadow-soft);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        .conclusion-box h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            color: var(--accent-light);
+            margin-bottom: 25px;
+            font-style: italic;
+            font-weight: 700;
+        }
+        .conclusion-box p {
+            font-size: 16px;
+            color: var(--text-muted);
+            max-width: 850px;
+            margin: 0 auto 18px auto;
+            line-height: 1.9;
+            font-weight: 500;
+            text-align: justify;
+        }
+        .conclusion-box .signature {
+            margin-top: 40px;
+            font-size: 26px;
+            color: var(--accent-pink);
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* MODAL CHI TIẾT */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(255, 240, 245, 0.8); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .modal-content { 
+            background: rgba(255, 255, 255, 0.95); border: 1px solid var(--glass-border-hover);
+            margin: 5% auto; padding: 50px; border-radius: var(--radius-lg); width: 90%; max-width: 750px; 
+            box-shadow: 0 25px 60px rgba(255, 127, 80, 0.15); position: relative; animation: modalPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); max-height: 85vh; overflow-y: auto;
+        }
+        @keyframes modalPop { 0% { transform: scale(0.9) translateY(20px); opacity: 0; } 100% { transform: scale(1) translateY(0); opacity: 1; } }
+        
+        .close-btn { position: absolute; right: 30px; top: 30px; width: 36px; height: 36px; background: rgba(255, 139, 167, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold; color: var(--accent-light); cursor: pointer; transition: var(--transition); border: none;}
+        .close-btn:hover { background: var(--accent-light); color: #FFF; transform: rotate(90deg); }
+
+        .modal-sub { font-size: 13px; color: var(--accent-pink); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px;}
+        .modal-main-title { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--text-main); margin-bottom: 10px; font-weight: 700;}
+        .modal-context { font-size: 15px; color: var(--text-muted); margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+
+        .log-item { background: rgba(255, 245, 240, 0.5); border: 1px solid rgba(255, 127, 80, 0.15); padding: 20px 25px; border-radius: 16px; margin-bottom: 15px; font-size: 15px; color: var(--text-main); line-height: 1.7; transition: var(--transition); text-align: justify; position: relative;}
+        .log-item:hover { background: #FFF; border-color: rgba(255, 127, 80, 0.4); box-shadow: var(--shadow-soft); transform: translateX(5px);}
+        .log-item::before { content: '🌸'; margin-right: 8px; font-size: 14px;}
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .grid-3 .module-card:nth-child(3n+2) { transform: translateY(0); }
+            .grid-3 .module-card:nth-child(3n+2):hover { transform: translateY(-8px); }
+            .file-grid { grid-template-columns: 1fr; }
+            .avatar-box { height: 400px; }
+            .conclusion-box { padding: 40px 20px; }
+        }
+        
+        /* Tùy chỉnh thanh cuộn cho Modal */
+        .modal-content::-webkit-scrollbar { width: 8px; }
+        .modal-content::-webkit-scrollbar-track { background: transparent;}
+        .modal-content::-webkit-scrollbar-thumb { background: rgba(255, 139, 167, 0.5); border-radius: 10px; }
+        .modal-content::-webkit-scrollbar-thumb:hover { background: var(--accent-light); }
+    </style>
+</head>
+<body>
+
+    <!-- ĐỒ HỌA TRANG TRÍ ĐIỆU ĐÀ (HOA, LÁ, CHIM, ĐẠI DƯƠNG) -->
+    <div class="decor-item" style="top: 8%; left: 6%; font-size: 45px; animation-duration: 16s;">🌸</div>
+    <div class="decor-item" style="top: 20%; right: 8%; font-size: 48px; animation-duration: 20s; animation-delay: -3s;">🕊️</div>
+    <div class="decor-item" style="top: 65%; left: 8%; font-size: 42px; animation-duration: 18s; animation-delay: -7s;">🪼</div>
+    <div class="decor-item" style="top: 85%; right: 12%; font-size: 50px; animation-duration: 22s; animation-delay: -5s;">🪸</div>
+    <div class="decor-item" style="top: 15%; left: 45%; font-size: 30px; animation-duration: 17s; animation-delay: -2s;">⭐</div>
+    <div class="decor-item" style="top: 45%; right: 4%; font-size: 38px; animation-duration: 25s; opacity: 0.6;">🍃</div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="nav-brand">THANH THƯ<span>.</span></div>
+        <ul class="nav-links">
+            <li><a href="#hero" class="active">Giới thiệu</a></li>
+            <li><a href="#about">Về mình</a></li>
+            <li><a href="#diary">Nhật ký 6 tuần</a></li>
+            <li><a href="#cloud">Học liệu</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        
+        <!-- HERO SECTION -->
+        <section id="hero" class="hero-grid fade-up">
+            <!-- Thẻ ID -->
+            <div class="id-card glass-card">
+                <div class="avatar-box">
+                    <!-- SỬA THÀNH avatar.png ĐỂ ĐÚNG VỚI ẢNH BẠN ĐANG CÓ -->
+                    <img src="avatar.png" alt="Âu Thị Thanh Thư">
+                    <div class="status-badge"><span class="dot"></span> Nhẹ nhàng & Tinh tế</div>
+                </div>
+                <div class="id-info">
+                    <h1>Âu Thị Thanh Thư</h1>
+                    <p class="role">Sinh viên Kinh tế Quốc tế</p>
+                    <ul>
+                        <li>🎓 Đại học Kinh tế - ĐHQGHN</li>
+                        <li>🆔 Mã SV: 25051336</li>
+                        <li>✉️ Yêu cái đẹp & Khám phá</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tuyên ngôn cá nhân -->
+            <div class="hero-vision">
+                <div class="pills">
+                    <span class="pill-pink">VNU-UEB</span>
+                    <span class="pill-orange">📖 Đam mê đọc sách</span>
+                    <span class="pill-pink">✈️ Khám phá văn hóa</span>
+                </div>
+                <h2>Khẽ Chạm Vào <br><span class="text-gradient">Thế Giới Phẳng</span></h2>
+                <p>Xin chào, mình là Thanh Thư. Mang trong mình tình yêu mãnh liệt với những trang sách và khát khao chạm đến những vùng đất mới, mình luôn tìm thấy niềm vui khi khám phá những nét văn hóa đa sắc màu. Nhẹ nhàng nhưng kiên định, mình không ngừng cập nhật nhịp đập của kinh tế, thương mại và logistics toàn cầu. Mình tin rằng, cuộc sống là một hành trình học hỏi không ngừng, giúp bản thân rèn luyện sự thích nghi và bung nở một cách vẹn toàn nhất.</p>
+                <p>Bước vào kỷ nguyên số, môn học Nhập môn Công nghệ số như một làn gió mới, không chỉ trao cho mình những công cụ hiện đại mà còn định hình một tư duy nhạy bén, thanh thoát trước vạn vật đổi thay. Những kiến thức này sẽ là hành trang trân quý, giúp mình ứng dụng công nghệ một cách tinh tế vào học tập và công việc, đặc biệt là khi ngành logistics đang chuyển mình mạnh mẽ trong không gian số hóa.</p>
+                <div class="actions">
+                    <a href="#about" class="btn-primary">KHÁM PHÁ CÂU CHUYỆN</a>
+                    <a href="#cloud" class="btn-outline">XEM BÁO CÁO DỰ ÁN</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- BỨC TRANH THANH XUÂN (VỀ BẢN THÂN) -->
+        <section id="about" class="fade-up">
+            <h3 class="section-heading"><span>✨</span> BỨC TRANH THANH XUÂN</h3>
+            
+            <div class="grid-3">
+                <div class="module-card glass-card" onclick="openModal('info1')">
+                    <div class="card-icon">🌸</div>
+                    <h4 class="module-title">Giai Điệu Sở Thích</h4>
+                    <p class="module-desc">Yêu thích việc đọc sách, đắm chìm trong podcast và nhẹ nhàng cập nhật những xu hướng Logistics mới nhất để mở rộng tư duy.</p>
+                    <button class="btn-detail">Khám phá thêm →</button>
+                </div>
+
+                <div class="module-card glass-card" onclick="openModal('info2')">
+                    <div class="card-icon">🕊️</div>
+                    <h4 class="module-title">Chân Trời Sự Nghiệp</h4>
+                    <p class="module-desc">Giấc mơ được sải cánh trong lĩnh vực Logistics và Chuỗi cung ứng quốc tế, hóa thân thành người điều phối nhịp nhàng những dòng chảy giao thương.</p>
+                    <button class="btn-detail">Khám phá thêm →</button>
+                </div>
+
+                <div class="module-card glass-card" onclick="openModal('info3')">
+                    <div class="card-icon">🪸</div>
+                    <h4 class="module-title">Lý Do Đam Mê</h4>
+                    <p class="module-desc">Bị mê hoặc bởi cách hàng hóa và nguồn lực được kết nối khắp toàn cầu. Một vùng đất đòi hỏi tư duy logic và sự uyển chuyển không ngừng.</p>
+                    <button class="btn-detail">Khám phá thêm →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- NHẬT KÝ 6 TUẦN HỌC TẬP -->
+        <section id="diary" class="fade-up">
+            <h3 class="section-heading"><span>💻</span> NHẬT KÝ 6 TUẦN HỌC TẬP</h3>
+            
+            <div class="grid-3">
+                <div class="module-card glass-card" onclick="openModal('w1')">
+                    <div class="card-icon">📁</div>
+                    <h4 class="module-title">Tuần 1: Không gian số</h4>
+                    <p class="module-desc">Làm quen với hệ thống, dịu dàng sắp xếp và tổ chức lại các tệp tin để tạo ra một không gian lưu trữ thật ngăn nắp và khoa học.</p>
+                    <button class="btn-detail">Mở trang nhật ký →</button>
+                </div>
+
+                <div class="module-card glass-card" onclick="openModal('w2')">
+                    <div class="card-icon">🔍</div>
+                    <h4 class="module-title">Tuần 2: Thẩm định thông tin</h4>
+                    <p class="module-desc">Khám phá sự ảnh hưởng của Trí tuệ nhân tạo (AI) đến giáo dục đại học. Rèn luyện sự tinh tế trong việc chọn lọc tài liệu uy tín.</p>
+                    <button class="btn-detail">Mở trang nhật ký →</button>
+                </div>
+
+                <div class="module-card glass-card" onclick="openModal('w3')">
+                    <div class="card-header"><span class="status-pill"></span></div>
+                    <div class="card-icon">💬</div>
+                    <h4 class="module-title">Tuần 3: Trò chuyện cùng AI</h4>
+                    <p class="module-desc">Học cách thả hồn vào những dòng lệnh (Prompt), biến AI thành một người bạn tâm giao để giải thích các định nghĩa phức tạp.</p>
+                    <button class="btn-detail">Mở trang nhật ký →</button>
+                </div>
+
+                <div class="module-card glass-card" onclick="openModal('w4')">
+                    <div class="card-icon">🤝</div>
+                    <h4 class="module-title">Tuần 4: Bản hòa ca đồng đội</h4>
+                    <p class="module-desc">Cùng những người bạn đồng hành sử dụng Google Docs, Drive và Zalo để thêu dệt nên một dự án nhóm thật hài hòa và ăn ý.</p>
+                    <button class="btn-detail">Mở trang nhật ký →</button>
+                </div>
+
+                <div class="module-card glass-card" onclick="openModal('w5')">
+                    <div class="card-icon">✨</div>
+                    <h4 class="module-title">Tuần 5: Sắc màu sáng tạo</h4>
+                    <p class="module-desc">Dùng ChatGPT và Canva AI làm cọ vẽ, tô điểm cho những ý tưởng mộng mơ thành một bản Infographic rực rỡ và chuyên nghiệp.</p>
+                    <button class="btn-detail">Mở trang nhật ký →</button>
+                </div>
+
+                <div class="module-card glass-card" onclick="openModal('w6')">
+                    <div class="card-icon">⚖️</div>
+                    <h4 class="module-title">Tuần 6: Khí chất liêm chính</h4>
+                    <p class="module-desc">Thấu hiểu những ranh giới của liêm chính học thuật, giữ cho mình một tâm thế tự chủ, minh bạch và đầy kiêu hãnh.</p>
+                    <button class="btn-detail">Mở trang nhật ký →</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLOUD DRAWER (KHO LƯU TRỮ HỌC LIỆU) -->
+        <section id="cloud" class="pod glass-card fade-up">
+            <h3 class="pod-title"><span>📁</span> NGĂN TỦ TRI THỨC</h3>
+            <h4 class="pod-subtitle">Những Minh Chứng Học Tập Yêu Kiều (PDF)</h4>
+            <div class="file-grid">
+                <a href="BÀI_TẬP_TUẦN_1.pdf" class="file-btn" target="_blank">📄 Dấu ấn Tuần 1: Không gian số</a>
+                <a href="BÀI_TẬP_TUẦN_2.pdf" class="file-btn" target="_blank">📄 Dấu ấn Tuần 2: Thẩm định tài liệu</a>
+                <a href="BÀI_TẬP_TUẦN_3.pdf" class="file-btn" target="_blank">📄 Dấu ấn Tuần 3: Trò chuyện cùng AI</a>
+                <a href="BÀI_TẬP_TUẦN_4.pdf" class="file-btn" target="_blank">📄 Dấu ấn Tuần 4: Bản hòa ca đồng đội</a>
+                <a href="BÀI_TẬP_TUẦN_5.pdf" class="file-btn" target="_blank">📄 Dấu ấn Tuần 5: Sắc màu sáng tạo</a>
+                <a href="BÀI_TẬP_TUẦN_6.pdf" class="file-btn" target="_blank">📄 Dấu ấn Tuần 6: Khí chất liêm chính</a>
+            </div>
+        </section>
+
+        <!-- PHẦN KẾT - LỜI THÌ THẦM -->
+        <section id="conclusion" class="conclusion-box fade-up">
+            <h2>Hành Trang Của Mùa Thu <span>🍂</span></h2>
+            <div class="conclusion-content">
+                <p>Khép lại hành trình làm quen với môn học Nhập môn Công nghệ số, mình nhận ra thế giới kỹ thuật số không hề khô khan mà mang trong mình một vẻ đẹp rất riêng. Giống như việc sắp xếp lại một khu vườn nhỏ, từ việc quản lý dữ liệu ngăn nắp, đến việc thả hồn vào những dòng lệnh (Prompt) để biến AI thành một người bạn tâm giao, tất cả đều là những trải nghiệm thật diệu kỳ.</p>
+                <p>Hơn thế nữa, những nguyên tắc về sự liêm chính học thuật đã rèn giũa cho mình một tâm thế tự chủ, minh bạch và đầy kiêu hãnh. Giấc mơ vươn ra biển lớn trong ngành Logistics của mình giờ đây đã có thêm sự đồng hành vững chắc của tư duy số hóa.</p>
+                <p>Cảm ơn những trang nhật ký này đã lưu giữ lại một thanh xuân thật đẹp và nhiệt huyết. Tương lai phía trước dù có nhiều thay đổi, mình vẫn sẽ giữ mãi sự nhẹ nhàng, uyển chuyển để không ngừng bung nở và tỏa sáng.</p>
+                <p class="signature">Âu Thị Thanh Thư</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL CHI TIẾT TỪNG MỤC -->
+    <div id="logModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">✕</button>
+            <p id="modal-subtitle" class="modal-sub"></p>
+            <h3 id="modal-title" class="modal-main-title"></h3>
+            <p class="modal-context">Ghi chép từ: <span id="modal-context">Âu Thị Thanh Thư</span></p>
+            <div id="modal-logs"></div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Cuộn mượt và kích hoạt menu
+        document.querySelectorAll('.nav-links a, .actions a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId.startsWith('#')) {
+                    document.querySelectorAll('.nav-links a').forEach(el => el.classList.remove('active'));
+                    if(!this.classList.contains('btn-primary') && !this.classList.contains('btn-outline')) {
+                        this.classList.add('active');
+                    }
+                    window.scrollTo({
+                        top: document.querySelector(targetId).offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Hiệu ứng Fade-up khi cuộn
+        const fadeElements = document.querySelectorAll('.fade-up');
+        const appearObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+        fadeElements.forEach(el => appearObserver.observe(el));
+
+        // Dữ liệu cá nhân trích xuất và được viết lại theo văn phong mềm mại, điệu đà
+        const logsData = {
+            'info1': {
+                subtitle: "SỞ THÍCH CÁ NHÂN", title: "Khám Phá & Học Hỏi",
+                logs: [
+                    "Mình luôn dành một tình yêu đặc biệt cho những trang sách, thích cảm giác được thả hồn vào từng con chữ để khám phá những vùng đất và nét văn hóa mới lạ.", 
+                    "Bên cạnh đó, mình thường dành thời gian thảnh thơi nghe những bản podcast nhẹ nhàng, cập nhật các xu hướng kinh tế, thương mại và logistics qua các nền tảng trực tuyến.", 
+                    "Mình tin rằng, việc không ngừng học hỏi từ cuộc sống sẽ giúp tâm hồn thêm phong phú, tư duy rộng mở và rèn luyện được sự uyển chuyển, thích nghi vẹn toàn."
+                ]
+            },
+            'info2': {
+                subtitle: "MỤC TIÊU NGHỀ NGHIỆP", title: "Giấc Mơ Chuỗi Cung Ứng",
+                logs: [
+                    "Giấc mơ của mình là được làm việc trong lĩnh vực Logistics và Quản lý chuỗi cung ứng quốc tế, hóa thân thành người điều phối nhịp nhàng những dòng chảy giao thương.", 
+                    "Đặc biệt, mình khao khát được thử sức ở các vị trí xuất nhập khẩu hoặc vận hành chuỗi cung ứng, nơi mà từng quyết định nhỏ cũng mang lại sự thay đổi lớn.", 
+                    "Không chỉ dừng lại ở kinh nghiệm chuyên môn, mình luôn ấp ủ việc mài giũa tư duy phân tích sắc sảo và kỹ năng quản lý linh hoạt, để tự tin tỏa sáng và mang lại giá trị bền vững cho doanh nghiệp."
+                ]
+            },
+            'info3': {
+                subtitle: "LÝ DO LỰA CHỌN", title: "Mạch Máu Của Nền Kinh Tế",
+                logs: [
+                    "Mình chọn ngành Logistics vì nhận ra đây chính là lĩnh vực giữ vai trò thiết yếu, tựa như những mạch máu lưu thông nuôi dưỡng nền kinh tế toàn cầu.", 
+                    "Cảm giác được nhìn thấy hàng hóa, thông tin và các nguồn lực được kết nối một cách hoàn hảo giữa các quốc gia mang lại cho mình một sự hứng thú vô bờ bến.", 
+                    "Đây là một chân trời rộng mở đòi hỏi tư duy logic, sự thích ứng nhanh nhạy và tinh thần học hỏi không ngừng - những tố chất mà mình luôn nâng niu và theo đuổi."
+                ]
+            },
+            'w1': {
+                subtitle: "NHẬT KÝ TUẦN 1", title: "Không gian số",
+                logs: [
+                    "Bắt đầu bằng việc làm quen với File Explorer, mình đã học cách tiếp cận và tổ chức lại hệ thống ổ đĩa lưu trữ trên máy tính.", 
+                    "Thực hành tạo lập thư mục mang dấu ấn cá nhân ThucHanh_AuThiThanhThu và thư mục con TaiLieu một cách thật khoa học và dịu mắt.", 
+                    "Tạo tệp văn bản GhiChu.txt, sau đó sử dụng lệnh Rename để đổi tên thành GhiChuQuanTrong.txt sao cho thật gọn gàng.",
+                    "Làm quen với các luồng thao tác dữ liệu: Copy, Paste, Cut giữa các thư mục, cùng kỹ năng dọn dẹp và khôi phục tệp từ Recycle Bin."
+                ]
+            },
+            'w2': {
+                subtitle: "NHẬT KÝ TUẦN 2", title: "Thẩm định tài liệu",
+                logs: [
+                    "Lựa chọn chủ đề về sự giao thoa của công nghệ và con người: 'Ứng dụng trí tuệ nhân tạo (AI) trong giáo dục đại học'.", 
+                    "Nhẹ nhàng chắt lọc những viên ngọc tri thức từ các tạp chí Giáo dục, Khoa học để tìm kiếm những tài liệu học thuật có chiều sâu.", 
+                    "Lập bảng đánh giá độ tin cậy của 11 nguồn thông tin, rèn luyện con mắt tinh tường khi đối chiếu theo tiêu chí CRAAP (Độ mới, Độ uy tín, Độ chính xác).", 
+                    "Đúc kết lại rằng: để có một nền tảng nghiên cứu vững chắc, sự tỉ mỉ trong việc chọn lọc và thẩm định thông tin là điều không thể thiếu."
+                ]
+            },
+            'w3': {
+                subtitle: "NHẬT KÝ TUẦN 3", title: "Trò chuyện cùng AI",
+                logs: [
+                    "Học cách thổi hồn vào những dòng lệnh (Prompt), biến AI thành một người bạn tâm giao trong không gian học thuật.", 
+                    "Thực hành các cấp độ Prompt từ cơ bản đến nâng cao: nhờ AI phân tích tài liệu và vẽ nên một sơ đồ tư duy khái niệm thật đẹp mắt.", 
+                    "Giao vai trò (Role-prompting) để AI hóa thân thành luật sư tư vấn, giải thích khái niệm 'tài sản' một cách dễ hiểu và uyển chuyển.", 
+                    "Sử dụng AI để tạo ra các bộ câu hỏi ôn tập sắc bén về chủ đề bảo vệ môi trường và biến đổi khí hậu."
+                ]
+            },
+            'w4': {
+                subtitle: "NHẬT KÝ TUẦN 4", title: "Bản hòa ca đồng đội",
+                logs: [
+                    "Cùng nhóm đồng hành bước vào dự án ứng dụng trí tuệ nhân tạo trong lĩnh vực y tế, sức khỏe và sự sống.", 
+                    "Sử dụng Google Docs để cùng nhau soạn thảo, kết nối từng dòng ý tưởng lại với nhau mà không làm mất đi sự mượt mà của tổng thể.", 
+                    "Điều phối nhịp nhàng công việc qua Messenger, Zalo và gặp gỡ qua những buổi thảo luận ấm cúng trên Google Meet.",
+                    "Biết cách ghim lại những tin nhắn quan trọng, duy trì sự gắn kết và khắc phục những khó khăn khi mọi người cùng làm việc từ xa."
+                ]
+            },
+            'w5': {
+                subtitle: "NHẬT KÝ TUẦN 5", title: "Sắc màu sáng tạo",
+                logs: [
+                    "Khai phá sức mạnh tạo sinh của AI để dệt nên một bản Infographic rực rỡ với chủ đề 'Kỹ năng cần thiết cho sinh viên trong thời đại số'.", 
+                    "Nhờ ChatGPT vạch ra dàn ý sắc sảo, chắt lọc nội dung từ kỹ năng tư duy phản biện, học tập suốt đời cho đến đạo đức số.", 
+                    "Viết mô tả (Prompt) cho DALL-E để phác họa những hình ảnh minh họa sinh viên mang phong cách tối giản nhưng ngập tràn màu sắc tươi sáng.", 
+                    "Đưa mọi thứ lên Canva AI để sắp xếp bố cục, thay đổi phông chữ và hoàn thiện một sản phẩm mang đậm tính cá nhân."
+                ]
+            },
+            'w6': {
+                subtitle: "NHẬT KÝ TUẦN 6", title: "Khí chất liêm chính",
+                logs: [
+                    "Thấu hiểu chính sách của Đại học Quốc gia Hà Nội (VNU): Khuyến khích dùng AI như trợ lý học tập nhưng nghiêm cấm gian lận và đánh cắp chất xám.", 
+                    "Nhận diện rõ ranh giới mong manh giữa 'Hỗ trợ hợp lý' (sửa lỗi, tìm ý tưởng) và 'Gian lận học thuật' (sao chép mù quáng không kiểm chứng).", 
+                    "Nhận thức được hệ lụy của việc lười tư duy, phụ thuộc quá mức vào AI sẽ làm mòn chột khả năng phản biện độc lập của bản thân.", 
+                    "Tự hào thiết lập bộ 7 nguyên tắc cá nhân vững chắc: Con người là trung tâm, Luôn kiểm chứng thông tin, Tôn trọng bản quyền và Minh bạch tuyệt đối."
+                ]
+            }
+        };
+
+        const modal = document.getElementById("logModal");
+        function openModal(weekKey) {
+            const data = logsData[weekKey];
+            if(data) {
+                document.getElementById("modal-subtitle").innerText = data.subtitle;
+                document.getElementById("modal-title").innerText = data.title;
+                
+                const logsContainer = document.getElementById("modal-logs");
+                logsContainer.innerHTML = ""; 
+                data.logs.forEach(log => {
+                    const div = document.createElement("div");
+                    div.className = "log-item"; div.innerHTML = log;
+                    logsContainer.appendChild(div);
+                });
+                modal.style.display = "block";
+                document.body.style.overflow = "hidden";
+            }
+        }
+        function closeModal() {
+            modal.style.display = "none";
+            document.body.style.overflow = "auto";
+        }
+        window.onclick = function(e) { if (e.target == modal) closeModal(); }
+    </script>
+</body>
+</html>
